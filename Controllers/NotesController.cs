@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using NotesBackend.Data;
 using NotesBackend.Models;
 
-namespace  NotesBackend.Controllers
-{
-    [Route("api/notes")]
+namespace  NotesBackend.Controllers;
+
+    [Route("api/[Controller]")]
     //[Route("api/editnotes")]
     [ApiController]
     public class NotesController : ControllerBase
@@ -47,4 +47,3 @@ namespace  NotesBackend.Controllers
         }
 
     }
-}

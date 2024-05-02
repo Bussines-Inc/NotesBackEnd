@@ -32,7 +32,7 @@ namespace  NotesBackend.Controllers;
             }
             return notes;
         }
-
+        //ELiminar
         [HttpDelete("{id}")]
         public async Task<ActionResult<Notes>> DeleteNote(int id)
         {
@@ -46,4 +46,45 @@ namespace  NotesBackend.Controllers;
             return NoContent();
         }
 
-    }
+        //crear
+        [HttpPost]
+        public async Task<ActionResult<Notes>> PostNote(Notes n)
+        {
+            _context.Notes.Add(n);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetNotes", new {id = n.Id}, n);
+        }
+
+        //editar
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Notes>> EditNote(int id, Notes n)
+        {
+            if (id != n.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(n).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!NotesExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+        private bool NotesExists(int id)
+        {
+        return _context.Notes.Any(e => e.Id == id);
+        }
+}

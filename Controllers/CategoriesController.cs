@@ -19,6 +19,6 @@ namespace  CategoriesController.Controllers;
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Categories>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories.ToListAsync(); 
         }
     }

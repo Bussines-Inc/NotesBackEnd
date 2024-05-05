@@ -21,4 +21,12 @@ namespace  CategoriesController.Controllers;
         {
             return await _context.Categories.ToListAsync(); 
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Categories>> PostCategory(Categories c)
+        {
+            _context.Categories.Add(c);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetCategories", new {id = c.Id}, c);
+        }
     }
